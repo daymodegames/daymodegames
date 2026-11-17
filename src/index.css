@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=DM+Sans:wght@400;500;700&family=Press+Start+2P&display=swap');
+
+:root {
+  --bg: #f7f5f0;
+  --surface: #ffffff;
+  --text: #1a1a1a;
+  --text-muted: #888;
+  --sun: #ffb703;
+  --sun-soft: #fff3d6;
+  --sky: #4cc9f0;
+  --sky-soft: #e2f6fd;
+  --coral: #e63946;
+  --coral-soft: #fdecea;
+  --border: #e8e4dc;
+  --shadow: #e3ddcc;
+  --font-pixel: 'Press Start 2P', monospace;
+  --font-round: 'Fredoka', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+}
