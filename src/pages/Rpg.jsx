@@ -9,8 +9,8 @@ export default function Rpg() {
         <h1>Working title: none yet.</h1>
         <p className="hero-sub">
           We make two-minute daily games. So naturally, we're also making an RPG.
-          This is the devlog: what we're building, why, and how it's going —
-          warts, wins, and rewrites included. Story teasers too, when they're ready.
+          This is the devlog: what we're building, why, and how it's going.
+          Warts, wins, and rewrites included. Story teasers when they're ready.
         </p>
       </section>
 

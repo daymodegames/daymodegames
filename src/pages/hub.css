@@ -9,6 +9,7 @@
   position: sticky;
   top: 0;
   z-index: 10;
+  border-bottom: 3px solid var(--sun);
 }
 
 .logo-img {
@@ -32,6 +33,7 @@
 
 .site-nav a:hover {
   opacity: 1;
+  color: var(--sun);
 }
 
 /* ─── Shared layout ─── */
@@ -40,7 +42,7 @@
 .hub {
   max-width: 900px;
   margin: 0 auto;
-  padding: 0 1.5rem 0;
+  padding: 0 1.5rem 3rem;
   min-height: calc(100svh - 60px);
   display: flex;
   flex-direction: column;
@@ -95,74 +97,132 @@
   margin-bottom: 1.25rem;
 }
 
-.game-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.25rem;
-}
-
-.game-card {
+/* Five Degrees: today's actual poster pair */
+.fd-card {
   background: var(--surface);
   border: 2px solid var(--border);
-  border-radius: 16px;
-  padding: 1.5rem;
-  text-decoration: none;
+  border-radius: 18px;
+  padding: 1.4rem;
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  box-shadow: 0 5px 0 var(--shadow);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  gap: 1.4rem;
+  align-items: center;
+  box-shadow: 0 6px 0 var(--shadow);
+  text-decoration: none;
+  flex-wrap: wrap;
+  transition: transform 0.15s ease, border-color 0.15s ease;
 }
 
-.game-card:hover {
+.fd-card:hover {
   transform: translateY(-3px);
   border-color: var(--sun);
-  box-shadow: 0 8px 0 var(--shadow);
 }
 
-.game-card .tile {
-  width: 58px;
-  height: 58px;
-  border-radius: 14px;
-  background: var(--sky-soft);
+.posters {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+.poster {
+  width: 88px;
+  height: 128px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  background: var(--border);
+}
+
+.poster.ph {
   display: grid;
   place-items: center;
-  font-size: 1.8rem;
 }
 
-.game-card h3 {
+.hopdots {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hopdots i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ddd;
+}
+
+.hopdots i.on {
+  background: var(--coral);
+}
+
+.fd-copy h3 {
   font-family: var(--font-round);
   font-weight: 600;
   font-size: 1.25rem;
 }
 
-.game-card p {
+.pair {
+  font-size: 0.78rem;
+  color: var(--coral);
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin: 0.25rem 0 0.6rem;
+}
+
+.fd-copy p {
   font-size: 0.9rem;
   color: var(--text-muted);
   line-height: 1.45;
+  margin-bottom: 0.8rem;
 }
 
-.status {
-  font-size: 0.75rem;
+.play {
+  display: inline-block;
+  background: var(--coral);
+  color: #fff;
   font-weight: 700;
-  letter-spacing: 0.5px;
-  padding: 0.45rem 0.8rem;
+  font-size: 0.78rem;
+  padding: 0.55rem 1.1rem;
   border-radius: 999px;
-  width: fit-content;
-  margin-top: auto;
 }
 
-.status.live {
-  background: var(--coral-soft);
-  color: var(--coral);
+/* Mini Murder: deliberately a different shape */
+.mm-row {
+  margin-top: 0.9rem;
+  border: 2px dashed #d8d2c2;
+  border-radius: 14px;
+  padding: 1.1rem 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #555;
+  text-decoration: none;
+  flex-wrap: wrap;
+  transition: border-color 0.15s ease, color 0.15s ease;
 }
 
-.status.soon {
-  background: var(--sun-soft);
+.mm-row:hover {
+  border-color: var(--sun);
+  color: var(--text);
+}
+
+.mm-row b {
+  color: var(--text);
+}
+
+.mm-row .soon {
+  margin-left: auto;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
   color: #b07d00;
+  background: var(--sun-soft);
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  white-space: nowrap;
 }
 
-/* ─── Bands (feature sections) ─── */
+/* ─── Bands ─── */
 
 .band {
   margin-top: 3.5rem;
@@ -210,6 +270,35 @@
   color: var(--sun);
 }
 
+.sun-word {
+  color: var(--sun);
+}
+
+/* ─── Support: one quiet line ─── */
+
+.support-line {
+  margin: 2.5rem 0 0;
+  padding: 1.4rem 0;
+  border-top: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  flex-wrap: wrap;
+}
+
+.support-line a {
+  color: var(--coral);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.support-line a:hover {
+  text-decoration: underline;
+}
+
 /* ─── Devlog ─── */
 
 .dark-page {
@@ -248,7 +337,28 @@
   color: #f5f2ea;
 }
 
-/* ─── Support / misc ─── */
+.status {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  width: fit-content;
+  margin-top: 0.75rem;
+  display: inline-block;
+}
+
+.status.live {
+  background: var(--coral-soft);
+  color: var(--coral);
+}
+
+.status.soon {
+  background: var(--sun-soft);
+  color: #b07d00;
+}
+
+/* ─── Misc ─── */
 
 .share-row {
   display: flex;
@@ -264,7 +374,6 @@
 
 .back-row {
   margin-top: 3rem;
-  padding-bottom: 3rem;
 }
 
 .back-link {

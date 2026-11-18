@@ -10,9 +10,9 @@ export default function Support() {
       <section className="hero">
         <h1>Keep Daymode in daylight.</h1>
         <p className="hero-sub">
-          Daymode is free — the games, the site, all of it. No ads, no paywalls,
-          no "premium puzzles." If you'd like to chip in, tips keep the servers on,
-          the API key fed, and the new games coming.
+          Daymode is free. The games, the site, all of it. If a puzzle made
+          your morning better, a tip keeps the lights on, the API key fed,
+          and more games coming.
         </p>
         <div className="share-row">
           <a className="share-btn" href={KOFI_URL} target="_blank" rel="noreferrer">
@@ -20,7 +20,7 @@ export default function Support() {
           </a>
         </div>
         <p className="fine-print">
-          Tips, not donations — Daymode isn't a charity, just a game studio
+          Tips, not donations. Daymode isn't a charity, just a game studio
           that likes giving things away.
         </p>
       </section>
