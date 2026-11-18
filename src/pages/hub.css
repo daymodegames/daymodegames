@@ -1,37 +1,88 @@
-/* ─── Hub homepage ─── */
+/* ─── Site chrome ─── */
 
+.site-header {
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo-img {
+  height: 38px;
+  display: block;
+}
+
+.site-nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.site-nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  opacity: 0.85;
+  padding: 0.25rem 0;
+}
+
+.site-nav a:hover {
+  opacity: 1;
+}
+
+/* ─── Shared layout ─── */
+
+.home,
 .hub {
   max-width: 900px;
   margin: 0 auto;
-  padding: 3rem 1.5rem 0;
-  min-height: 100svh;
+  padding: 0 1.5rem 0;
+  min-height: calc(100svh - 60px);
   display: flex;
   flex-direction: column;
-  /* arcade dot pattern, soft */
-  background-image: radial-gradient(rgba(230, 57, 70, 0.07) 1.5px, transparent 1.5px);
-  background-size: 26px 26px;
+}
+
+.hero {
+  padding: 3.5rem 0 0.5rem;
+}
+
+.hero h1 {
+  font-family: var(--font-round);
+  font-weight: 700;
+  font-size: clamp(2.4rem, 6vw, 3.4rem);
+  line-height: 1.05;
+  letter-spacing: -1px;
+}
+
+.hero-sub {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  margin-top: 1rem;
+  max-width: 34rem;
+  line-height: 1.5;
 }
 
 .kicker {
   font-family: var(--font-pixel);
-  font-size: 0.6rem;
+  font-size: 0.55rem;
   letter-spacing: 2px;
   color: var(--coral);
   margin-bottom: 1rem;
 }
 
-.hub h1 {
-  font-family: var(--font-round);
-  font-weight: 700;
-  font-size: 3rem;
-  letter-spacing: -1px;
+.kicker-dark {
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  letter-spacing: 2px;
+  color: var(--sun);
+  margin-bottom: 1.25rem;
 }
 
-.tagline {
-  font-size: 1.05rem;
-  color: var(--text-muted);
-  margin-top: 0.4rem;
-}
+/* ─── Game lineup ─── */
 
 .lineup {
   margin-top: 3rem;
@@ -89,16 +140,16 @@
   font-size: 0.9rem;
   color: var(--text-muted);
   line-height: 1.45;
-  flex: 1;
 }
 
 .status {
-  font-family: var(--font-pixel);
-  font-size: 0.5rem;
-  letter-spacing: 1px;
-  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 0.45rem 0.8rem;
   border-radius: 999px;
   width: fit-content;
+  margin-top: auto;
 }
 
 .status.live {
@@ -111,38 +162,113 @@
   color: #b07d00;
 }
 
-.ghost-card {
-  border: 2px dashed var(--border);
-  border-radius: 16px;
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  color: var(--text-muted);
-  min-height: 200px;
+/* ─── Bands (feature sections) ─── */
+
+.band {
+  margin-top: 3.5rem;
+  border: 2px solid var(--border);
+  border-radius: 20px;
+  padding: 2.25rem;
+  background: var(--surface);
 }
 
-.ghost-card .plus {
+.band.dark {
+  background: #0d0d0d;
+  border-color: #0d0d0d;
+  color: #f5f2ea;
+  padding: 3rem;
+}
+
+.band h2 {
   font-family: var(--font-round);
-  font-size: 2rem;
+  font-weight: 700;
+  font-size: 1.7rem;
+  margin-bottom: 0.75rem;
+}
+
+.band p {
+  color: var(--text-muted);
+  max-width: 34rem;
+  line-height: 1.55;
+}
+
+.band.dark p {
+  color: #b9b3a4;
+  max-width: 40rem;
+}
+
+.band-cta {
+  display: inline-block;
+  margin-top: 1.25rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--coral);
+  font-size: 0.95rem;
+}
+
+.band.dark .band-cta {
   color: var(--sun);
 }
 
-.hub-footer {
-  margin-top: auto;
-  text-align: center;
-  padding: 3rem 0;
+/* ─── Devlog ─── */
+
+.dark-page {
+  padding-bottom: 3rem;
+}
+
+.entry {
+  background: #161616;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.entry-num {
   font-family: var(--font-pixel);
   font-size: 0.55rem;
+  color: var(--sun);
   letter-spacing: 2px;
+}
+
+.entry h3 {
+  font-family: var(--font-round);
+  font-weight: 600;
+  font-size: 1.15rem;
+  margin: 0.5rem 0 0.35rem;
+  color: #f5f2ea;
+}
+
+.entry p {
+  color: #b9b3a4;
+  font-size: 0.9rem;
+}
+
+.dark-page .lineup h2 {
+  color: #f5f2ea;
+}
+
+/* ─── Support / misc ─── */
+
+.share-row {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-start;
+  margin: 24px 0 8px;
+}
+
+.fine-print {
+  font-size: 0.8rem;
   color: var(--text-muted);
+}
+
+.back-row {
+  margin-top: 3rem;
+  padding-bottom: 3rem;
 }
 
 .back-link {
   display: inline-block;
-  margin-top: 1.5rem;
   font-size: 0.85rem;
   color: var(--text-muted);
   text-decoration: none;
@@ -151,6 +277,8 @@
 .back-link:hover {
   color: var(--coral);
 }
+
+/* ─── Stubs ─── */
 
 .stub {
   max-width: 480px;

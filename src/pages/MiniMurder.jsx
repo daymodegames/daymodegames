@@ -3,7 +3,7 @@ import "./hub.css";
 
 export default function MiniMurder() {
   return (
-    <div className="stub">
+    <main className="stub">
       <p className="kicker">🕵️ CASE FILE № 001</p>
       <h1 className="game-title">Mini Murder</h1>
       <p className="subtitle">
@@ -11,6 +11,6 @@ export default function MiniMurder() {
       </p>
       <div className="coming">COMING SOON</div>
       <Link className="back-link" to="/">← Back to Daymode Games</Link>
-    </div>
+    </main>
   );
 }

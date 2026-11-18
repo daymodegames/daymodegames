@@ -6,26 +6,28 @@ const GAMES = [
     slug: "/five-degrees",
     emoji: "🎬",
     title: "Five Degrees",
-    desc: "Connect two movies through the actors they share. A new pair of famous films every day.",
+    desc: "Two famous movies. Connect them through the actors they share. New pair every day.",
     status: "live",
   },
   {
     slug: "/mini-murder",
     emoji: "🕵️",
     title: "Mini Murder",
-    desc: "A bite-sized murder mystery to solve with your morning coffee. One case per day.",
+    desc: "A bite-sized murder mystery with your morning coffee. One case a day.",
     status: "soon",
   },
 ];
 
 export default function Home() {
   return (
-    <div className="hub">
-      <header>
-        <p className="kicker">☀ DAILY GAMES · NEW EVERY DAY</p>
-        <h1>Daymode Games</h1>
-        <p className="tagline">Quick daily games, played in daylight.</p>
-      </header>
+    <main className="home">
+      <section className="hero">
+        <h1>Two minutes.<br />One puzzle.<br />Every day.</h1>
+        <p className="hero-sub">
+          Free browser games you can finish before your coffee gets cold.
+          No logins. No downloads. No ads in your face.
+        </p>
+      </section>
 
       <section className="lineup">
         <h2>Today's lineup</h2>
@@ -36,18 +38,30 @@ export default function Home() {
               <h3>{g.title}</h3>
               <p>{g.desc}</p>
               <span className={`status ${g.status}`}>
-                {g.status === "live" ? "▶ LIVE" : "COMING SOON"}
+                {g.status === "live" ? "▶ Play today's puzzle" : "Coming soon"}
               </span>
             </Link>
           ))}
-          <div className="ghost-card">
-            <span className="plus">+</span>
-            <span>More games brewing…</span>
-          </div>
         </div>
       </section>
 
-      <footer className="hub-footer">☀ DAYMODE GAMES ☀</footer>
-    </div>
+      <section className="band dark">
+        <h2>There's also a big one.</h2>
+        <p>
+          Between the daily games, we're building an RPG. A proper one.
+          No name yet — that's your first hint it's early days.
+        </p>
+        <Link className="band-cta" to="/rpg">Follow the devlog →</Link>
+      </section>
+
+      <section className="band">
+        <h2>Daymode runs on tips, not ads.</h2>
+        <p>
+          If a puzzle made your morning better, a tip keeps the lights on
+          and the games coming. Totally optional, always appreciated.
+        </p>
+        <Link className="band-cta" to="/support">Support the studio →</Link>
+      </section>
+    </main>
   );
 }
