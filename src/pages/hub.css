@@ -358,6 +358,33 @@
   color: #b07d00;
 }
 
+/* ─── Devlog entry bodies (markdown) ─── */
+
+.entry-body p {
+  color: #b9b3a4;
+  font-size: 0.9rem;
+  margin: 0.25rem 0 0.75rem;
+  line-height: 1.55;
+}
+
+.entry-body ul {
+  margin: 0.25rem 0 0.75rem 1.1rem;
+  color: #b9b3a4;
+  font-size: 0.9rem;
+}
+
+.entry-body li {
+  margin: 0.3rem 0;
+  line-height: 1.45;
+}
+
+.entry-body h3,
+.entry-body h4 {
+  font-family: var(--font-round);
+  color: #f5f2ea;
+  margin: 0.9rem 0 0.35rem;
+}
+
 /* ─── Misc ─── */
 
 .share-row {
