@@ -207,6 +207,10 @@ export default function Game() {
   const castVisible = q ? castMatches : cast.slice(0, PREVIEW_COUNT);
   const moviesVisible = q ? movieMatches : actorMovies.slice(0, PREVIEW_COUNT);
 
+  // Timing for the win reveal: stones pop one by one, then the text rises
+  const stoneGap = 0.28; // seconds between stone pops
+  const revealDone = 0.3 + stones.length * stoneGap + 0.4;
+
   // ─── TITLE SCREEN ────────────────────────────────────────────────
   if (screen === "title") {
     return (
@@ -244,21 +248,54 @@ export default function Game() {
     );
   }
 
-  // ─── WIN SCREEN ──────────────────────────────────────────────────
+  // ─── WIN SCREEN: the bridge replays your journey ─────────────────
   if (screen === "win") {
     return (
       <div className="app result-screen win">
-        <h1>You did it!</h1>
-        <p className="result-hops">Connected in <strong>{hops}</strong> hop{hops !== 1 ? "s" : ""}.</p>
-        <ShareButtons text={buildShareText(chain, hops, true)} />
-        <div className="chain-log">
+        <div className="reveal-bridge">
+          {posterA && (
+            <img
+              className="stone used reveal end-poster"
+              src={`${IMG_URL}${posterA}`}
+              alt={DAILY_PUZZLE.movieA.title}
+              style={{ animationDelay: "0.1s" }}
+            />
+          )}
+          <div className="bridge-stones reveal-stones">
+            {stones.map((s, i) =>
+              s ? (
+                <img
+                  key={i}
+                  className={`stone used reveal ${i === stones.length - 1 ? "final-stone" : ""}`}
+                  src={`${IMG_URL}${s}`}
+                  alt=""
+                  style={{ animationDelay: `${0.4 + i * stoneGap}s` }}
+                />
+              ) : null
+            )}
+          </div>
+        </div>
+
+        <h1 className="reveal-text" style={{ animationDelay: revealDone + "s" }}>
+          You did it!
+        </h1>
+        <p className="result-hops fade-in" style={{ animationDelay: revealDone + 0.2 + "s" }}>
+          Connected in <strong>{hops}</strong> hop{hops !== 1 ? "s" : ""}.
+        </p>
+        <div className="fade-in" style={{ animationDelay: revealDone + 0.4 + "s" }}>
+          <ShareButtons text={buildShareText(chain, hops, true)} />
+        </div>
+
+        <div className="chain-log fade-in" style={{ animationDelay: revealDone + 0.6 + "s" }}>
           {chain.map((step, i) => (
             <div key={i} className={`chain-step ${step.type}`}>
               {step.type === "actor" ? "👤" : "🎬"} {step.label}
             </div>
           ))}
         </div>
-        <button className="start-btn" onClick={resetGame}>Play Again</button>
+        <button className="start-btn fade-in" style={{ animationDelay: revealDone + 0.8 + "s" }} onClick={resetGame}>
+          Play Again
+        </button>
       </div>
     );
   }
