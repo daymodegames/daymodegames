@@ -105,13 +105,14 @@ export default function Game() {
   const [chain, setChain] = useState([]); // [{type: 'movie'|'actor', label}]
   const [usedMovieIds, setUsedMovieIds] = useState(new Set());
   const [usedActorIds, setUsedActorIds] = useState(new Set());
+  const [stones, setStones] = useState([]); // poster pebbles for the bridge
 
   const [loading, setLoading] = useState(false);
   const [view, setView] = useState("cast"); // cast | movies
   const [query, setQuery] = useState(""); // search box
 
   useEffect(() => {
-    // Preload posters for title screen
+    // Preload posters for title screen and the bridge
     fetchMoviePoster(DAILY_PUZZLE.movieA.id).then(setPosterA);
     fetchMoviePoster(DAILY_PUZZLE.movieB.id).then(setPosterB);
   }, []);
@@ -125,6 +126,7 @@ export default function Game() {
     setUsedMovieIds(new Set([DAILY_PUZZLE.movieA.id]));
     setChain([{ type: "movie", label: DAILY_PUZZLE.movieA.title }]);
     setHops(0);
+    setStones([]);
     setView("cast");
     setSelectedActor(null);
     setActorMovies([]);
@@ -153,6 +155,8 @@ export default function Game() {
     setHops(newHops);
     setUsedMovieIds((prev) => new Set([...prev, movie.id]));
     setChain((prev) => [...prev, { type: "movie", label: movie.title }]);
+    // Drop this movie onto the bridge as a pebble
+    setStones((prev) => [...prev, movie.poster_path]);
 
     // Win condition
     if (movie.id === DAILY_PUZZLE.movieB.id) {
@@ -184,6 +188,7 @@ export default function Game() {
     setHops(0);
     setUsedMovieIds(new Set());
     setUsedActorIds(new Set());
+    setStones([]);
     setSelectedActor(null);
     setCast([]);
     setActorMovies([]);
@@ -280,17 +285,41 @@ export default function Game() {
   // ─── GAME SCREEN ─────────────────────────────────────────────────
   return (
     <div className="app game-screen">
-      {/* Header */}
+      {/* Header: the Poster Bridge */}
       <div className="game-header">
-        <div className="target-label">
-          <span>Goal:</span>
-          <strong>{DAILY_PUZZLE.movieB.title}</strong>
+        <div className="bridge">
+          {posterA && (
+            <img
+              className="bridge-thumb"
+              src={`${IMG_URL}${posterA}`}
+              alt={DAILY_PUZZLE.movieA.title}
+            />
+          )}
+          <div className="bridge-stones">
+            {Array.from({ length: MAX_HOPS }).map((_, i) =>
+              stones[i] ? (
+                <img
+                  key={i}
+                  className="stone used"
+                  src={`${IMG_URL}${stones[i]}`}
+                  alt=""
+                />
+              ) : (
+                <div key={i} className="stone pebble" />
+              )
+            )}
+          </div>
+          {posterB && (
+            <img
+              className="bridge-thumb goal-thumb"
+              src={`${IMG_URL}${posterB}`}
+              alt={DAILY_PUZZLE.movieB.title}
+            />
+          )}
         </div>
-        <div className="hops-dots">
-          {Array.from({ length: MAX_HOPS }).map((_, i) => (
-            <div key={i} className={`dot ${i < hops ? "used" : ""}`} />
-          ))}
-        </div>
+        <p className="bridge-count">
+          <strong>{stones.length}</strong>/{MAX_HOPS} hops · {MAX_HOPS - stones.length} left
+        </p>
       </div>
 
       {/* Current movie */}

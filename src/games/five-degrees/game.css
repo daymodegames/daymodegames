@@ -133,7 +133,7 @@
 .game-header {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -183,6 +183,10 @@
   font-size: 0.85rem;
   color: var(--text-muted);
   padding: 0 0.25rem;
+}
+
+.list-hint strong {
+  color: var(--text);
 }
 
 .item-list {
@@ -363,7 +367,6 @@
   color: var(--accent);
 }
 
-/* ── SEARCH BOX ── */
 .search-box {
   width: 100%;
   padding: 0.6rem 0.9rem;
@@ -383,4 +386,64 @@
 
 .search-box::placeholder {
   color: var(--text-muted);
+}
+
+/* ── THE POSTER BRIDGE ── */
+.bridge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.bridge-thumb {
+  width: 38px;
+  height: 56px;
+  border-radius: 6px;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+  background: var(--border);
+}
+
+.bridge-thumb.goal-thumb {
+  border: 2px solid var(--accent);
+}
+
+.bridge-stones {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.stone {
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.stone.pebble {
+  width: 9px;
+  height: 14px;
+  background: var(--dot-empty);
+  border-radius: 999px;
+}
+
+.stone.used {
+  width: 20px;
+  height: 30px;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.bridge-count {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin: 0;
+}
+
+.bridge-count strong {
+  color: var(--accent);
 }
