@@ -155,11 +155,10 @@ const NEW_RULES_FROM = 7;
 
 // Launch date of the daily game (UTC). Day 1 = 2026-11-18.
 const LAUNCH_UTC_DAY = Math.floor(Date.UTC(2026, 10, 18) / 86400000);
-
 const SITE_URL = "https://daymodegames.com";
 
 export function getPuzzleNumber() {
-  const todayUtcDay = Math.floor(Date.now() / 86400000);
+  const todayUtcDay = Math.floor((Date.now() - 6 * 3600 * 1000) / 86400000);
   return todayUtcDay - LAUNCH_UTC_DAY + 1;
 }
 
