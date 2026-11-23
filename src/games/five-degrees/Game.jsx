@@ -353,8 +353,8 @@ export default function Game() {
         <div className="list-section">
           <p className="list-hint">
             {q
-              ? `${movieMatches.length} result${movieMatches.length !== 1 ? "s" : ""} in {selectedActor?.name}'s filmography`
-              : `Pick a movie featuring <strong>{selectedActor?.name}</strong>`}
+              ? `${movieMatches.length} result${movieMatches.length !== 1 ? "s" : ""} in ${selectedActor?.name}'s filmography`
+              : <>Pick a movie featuring <strong>{selectedActor?.name}</strong></>}
           </p>
           <input
             className="search-box"
