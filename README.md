@@ -1,16 +1,15 @@
-## Hi there 👋
+# Daymode Games
 
-<!--
-**daymodegames/daymodegames** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+Quick daily games, played in daylight. Live at https://daymodegames.com
 
-Here are some ideas to get you started:
+## Site
+- `/` — the hub
+- `/five-degrees` — daily movie-connection puzzle (live)
+- `/mini-murder` — daily micro-mystery (coming soon)
+- `/rpg` — devlog for the big one
+- `/support` — tips
+- `/lab` — sandboxed prototypes; see `src/lab/README.md` for the rules
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+## Dev
+- Vite + React. Push to `main` auto-deploys via Vercel.
+- New lab experiments: one folder in `src/lab/experiments/`, auto-registered.
