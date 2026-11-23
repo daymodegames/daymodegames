@@ -107,6 +107,7 @@ export default function Game() {
 
   const [loading, setLoading] = useState(false);
   const [view, setView] = useState("cast"); // cast | movies
+  const [query, setQuery] = useState(""); // search box
 
   useEffect(() => {
     // Preload posters for title screen
@@ -126,6 +127,7 @@ export default function Game() {
     setView("cast");
     setSelectedActor(null);
     setActorMovies([]);
+    setQuery("");
     setLoading(false);
     setScreen("game");
   }
@@ -139,6 +141,7 @@ export default function Game() {
     setUsedActorIds((prev) => new Set([...prev, actor.id]));
     setChain((prev) => [...prev, { type: "actor", label: actor.name }]);
     setView("movies");
+    setQuery("");
     setLoading(false);
   }
 
@@ -170,6 +173,7 @@ export default function Game() {
     setSelectedActor(null);
     setActorMovies([]);
     setView("cast");
+    setQuery("");
     setLoading(false);
   }
 
@@ -182,7 +186,16 @@ export default function Game() {
     setSelectedActor(null);
     setCast([]);
     setActorMovies([]);
+    setQuery("");
   }
+
+  const q = query.trim().toLowerCase();
+  const filteredCast = q
+    ? cast.filter((a) => a.name.toLowerCase().includes(q))
+    : cast;
+  const filteredMovies = q
+    ? actorMovies.filter((m) => m.title.toLowerCase().includes(q))
+    : actorMovies;
 
   // ─── TITLE SCREEN ────────────────────────────────────────────────
   if (screen === "title") {
@@ -287,8 +300,18 @@ export default function Game() {
       {!loading && view === "cast" && (
         <div className="list-section">
           <p className="list-hint">Pick an actor to jump through</p>
+          <input
+            className="search-box"
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search the cast…"
+          />
+          {q && filteredCast.length === 0 && (
+            <p className="list-hint">No one in this cast matches "{query}"</p>
+          )}
           <div className="item-list">
-            {cast.map((actor) => (
+            {filteredCast.map((actor) => (
               <button
                 key={actor.id}
                 className={`item-btn ${usedActorIds.has(actor.id) ? "used" : ""}`}
@@ -322,8 +345,18 @@ export default function Game() {
           <p className="list-hint">
             Pick a movie featuring <strong>{selectedActor?.name}</strong>
           </p>
+          <input
+            className="search-box"
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search these movies…"
+          />
+          {q && filteredMovies.length === 0 && (
+            <p className="list-hint">No movie matches "{query}"</p>
+          )}
           <div className="item-list">
-            {actorMovies.map((movie) => (
+            {filteredMovies.map((movie) => (
               <button
                 key={movie.id}
                 className={`item-btn ${usedMovieIds.has(movie.id) ? "used" : ""} ${movie.id === DAILY_PUZZLE.movieB.id ? "target" : ""}`}
