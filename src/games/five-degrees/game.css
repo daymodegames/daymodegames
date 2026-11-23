@@ -447,3 +447,60 @@
 .bridge-count strong {
   color: var(--accent);
 }
+
+/* ── WIN REVEAL: the bridge lights up ── */
+.reveal-bridge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.reveal-stones {
+  flex: 0 1 auto;
+  justify-content: center;
+}
+
+.stone.reveal {
+  animation: stone-pop 0.45s both cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.stone.reveal.end-poster {
+  width: 38px;
+  height: 56px;
+  border: 2px solid var(--accent);
+}
+
+.stone.reveal.final-stone {
+  border: 2px solid #ffb703;
+  box-shadow: 0 0 18px rgba(255, 183, 3, 0.65);
+}
+
+@keyframes stone-pop {
+  from {
+    transform: scale(0) rotate(-12deg);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.reveal-text,
+.fade-in {
+  animation: fade-up 0.6s both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
