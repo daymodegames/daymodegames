@@ -12,13 +12,14 @@ const IMG_URL = "https://image.tmdb.org/t/p/w300";
 const DAILY_PUZZLE = getDailyPuzzle();
 
 const MAX_HOPS = 10;
+const PREVIEW_COUNT = 20; // how many to show before the player searches
 
 async function fetchMovieCredits(movieId) {
   const res = await fetch(
     `${BASE_URL}/movie/${movieId}/credits?api_key=${API_KEY}`
   );
   const data = await res.json();
-  return data.cast.slice(0, 20); // top 20 cast members
+  return data.cast.slice(0, 100); // the full billed cast, top-billed first
 }
 
 async function fetchActorMovies(actorId) {
@@ -29,7 +30,7 @@ async function fetchActorMovies(actorId) {
   return data.cast
     .filter((m) => m.poster_path)
     .sort((a, b) => b.popularity - a.popularity)
-    .slice(0, 20); // top 20 movies
+    .slice(0, 200); // the full filmography, not just the famous ones
 }
 
 async function fetchMoviePoster(movieId) {
@@ -189,13 +190,17 @@ export default function Game() {
     setQuery("");
   }
 
+  // Search digs through the FULL cast / filmography.
+  // Without a search, we preview only the top-billed / most popular.
   const q = query.trim().toLowerCase();
-  const filteredCast = q
+  const castMatches = q
     ? cast.filter((a) => a.name.toLowerCase().includes(q))
-    : cast;
-  const filteredMovies = q
+    : [];
+  const movieMatches = q
     ? actorMovies.filter((m) => m.title.toLowerCase().includes(q))
-    : actorMovies;
+    : [];
+  const castVisible = q ? castMatches : cast.slice(0, PREVIEW_COUNT);
+  const moviesVisible = q ? movieMatches : actorMovies.slice(0, PREVIEW_COUNT);
 
   // ─── TITLE SCREEN ────────────────────────────────────────────────
   if (screen === "title") {
@@ -299,19 +304,23 @@ export default function Game() {
       {/* Cast list */}
       {!loading && view === "cast" && (
         <div className="list-section">
-          <p className="list-hint">Pick an actor to jump through</p>
+          <p className="list-hint">
+            {q
+              ? `${castMatches.length} result${castMatches.length !== 1 ? "s" : ""} in the full cast`
+              : `Top ${Math.min(PREVIEW_COUNT, cast.length)} of ${cast.length} cast members — search to find anyone`}
+          </p>
           <input
             className="search-box"
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search the cast…"
+            placeholder="Search the whole cast…"
           />
-          {q && filteredCast.length === 0 && (
+          {q && castMatches.length === 0 && (
             <p className="list-hint">No one in this cast matches "{query}"</p>
           )}
           <div className="item-list">
-            {filteredCast.map((actor) => (
+            {castVisible.map((actor) => (
               <button
                 key={actor.id}
                 className={`item-btn ${usedActorIds.has(actor.id) ? "used" : ""}`}
@@ -343,20 +352,22 @@ export default function Game() {
       {!loading && view === "movies" && (
         <div className="list-section">
           <p className="list-hint">
-            Pick a movie featuring <strong>{selectedActor?.name}</strong>
+            {q
+              ? `${movieMatches.length} result${movieMatches.length !== 1 ? "s" : ""} in {selectedActor?.name}'s filmography`
+              : `Pick a movie featuring <strong>{selectedActor?.name}</strong>`}
           </p>
           <input
             className="search-box"
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search these movies…"
+            placeholder="Search their whole filmography…"
           />
-          {q && filteredMovies.length === 0 && (
-            <p className="list-hint">No movie matches "{query}"</p>
+          {q && movieMatches.length === 0 && (
+            <p className="list-hint">No movie in this filmography matches "{query}"</p>
           )}
           <div className="item-list">
-            {filteredMovies.map((movie) => (
+            {moviesVisible.map((movie) => (
               <button
                 key={movie.id}
                 className={`item-btn ${usedMovieIds.has(movie.id) ? "used" : ""} ${movie.id === DAILY_PUZZLE.movieB.id ? "target" : ""}`}
