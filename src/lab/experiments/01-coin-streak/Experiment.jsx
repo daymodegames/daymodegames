@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "../lab.css";
+import "../../lab.css";
 
 // ── LAB EXPERIMENT: Coin Streak ──────────────────────────────
 // The simplest possible experiment: flip a coin, count a streak.
