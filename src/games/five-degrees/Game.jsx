@@ -208,8 +208,8 @@ export default function Game() {
   const moviesVisible = q ? movieMatches : actorMovies.slice(0, PREVIEW_COUNT);
 
   // Timing for the win reveal: stones pop one by one, then the text rises
-  const stoneGap = 0.28; // seconds between stone pops
-  const revealDone = 0.3 + stones.length * stoneGap + 0.4;
+  const stoneGap = 0.4; // seconds between stone pops
+  const revealDone = 0.4 + stones.length * stoneGap + 0.5;
 
   // ─── TITLE SCREEN ────────────────────────────────────────────────
   if (screen === "title") {
