@@ -2,10 +2,11 @@ import { Link } from "react-router-dom";
 import "./lab.css";
 
 // Every experiment is one folder inside src/lab/experiments/
-// with an Experiment.jsx file. This page finds them automatically.
+// with an Experiment.jsx file. This page finds it automatically.
 const TITLES = {
   // folder name (as written in the filesystem) -> friendly name
   "01-coin-streak": "Coin Streak",
+  "02-five-degrees": "Five Degrees (sandbox)",
 };
 
 const experiments = import.meta.glob("./experiments/*/Experiment.jsx");
