@@ -1,0 +1,102 @@
+.lab {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 80svh;
+}
+
+.lab h1 {
+  font-family: var(--font-round);
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.lab-sub {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.lab-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.lab-card {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 0.9rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  text-decoration: none;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.lab-card:hover {
+  border-color: var(--sun);
+  transform: translateX(4px);
+}
+
+.lab-num {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: var(--text-muted);
+}
+
+.lab-name {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.lab-open {
+  margin-left: auto;
+  color: var(--coral);
+  font-weight: 700;
+}
+
+.kicker {
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  letter-spacing: 2px;
+  color: var(--coral);
+}
+
+.back-link {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  margin-top: auto;
+}
+
+.coin {
+  font-family: var(--font-pixel);
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  width: 130px;
+  height: 130px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 3px solid var(--border);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  user-select: none;
+  margin: 1rem auto;
+  transition: border-color 0.15s ease, transform 0.1s ease;
+}
+
+.coin:hover {
+  border-color: var(--sun);
+}
+
+.coin:active {
+  transform: scale(0.96);
+}
