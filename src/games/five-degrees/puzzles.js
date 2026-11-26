@@ -1,14 +1,20 @@
+import CALENDAR from "./calendar.json";
+
 // ─── Daily puzzle engine ────────────────────────────────────────────
 // A curated pool of well-known movies. Each day, a date-seeded RNG
-// picks two of them as that day's puzzle. Same pair for every player
-// (UTC day), changes at midnight UTC.
+// picks two of them as that day's puzzle. Same pair for every player,
+// changes at midnight CST (computed from UTC).
 //
-// Difficulty design (from puzzle #7 onward):
-//   • One endpoint always comes from LEGEND_POOL (pre-2000) and the
-//     other from MODERN_POOL (2000+). Decades apart means no famous
-//     one-hop bridges, and the puzzle feels like a real journey.
-//   • Two movies from the same franchise family are never paired.
-//   • Puzzles #1-6 keep the original selection so past shares stay valid.
+// Two layers, in order of trust:
+//   1. THE VERIFIED CALENDAR (calendar.json): pairs pre-checked
+//      against real TMDB cast data — no 1-hop bridges, 1-3 verified
+//      two-hop paths, MCU never an endpoint. Generated monthly by
+//      tools/generate-calendar.mjs and reviewed by a human.
+//   2. The runtime picker (below): a deterministic fallback for any
+//      day the calendar doesn't cover, using era-split pools and a
+//      franchise guard. Good, but unverified.
+//
+// Puzzles #1-6 keep the original selection so past shares stay valid.
 
 const LEGEND_POOL = [
   { id: 238, title: "The Godfather", franchise: "godfather" },
@@ -155,8 +161,11 @@ const NEW_RULES_FROM = 7;
 
 // Launch date of the daily game (UTC). Day 1 = 2026-11-18.
 const LAUNCH_UTC_DAY = Math.floor(Date.UTC(2026, 10, 18) / 86400000);
+
 const SITE_URL = "https://daymodegames.com";
 
+// CST midnight rollover: shift the UTC clock back 6 hours before
+// computing the day number.
 export function getPuzzleNumber() {
   const todayUtcDay = Math.floor((Date.now() - 6 * 3600 * 1000) / 86400000);
   return todayUtcDay - LAUNCH_UTC_DAY + 1;
@@ -185,7 +194,8 @@ function legacyPuzzle(number) {
   return { movieA: a, movieB: b };
 }
 
-// New picker: one legend, one modern hit, never the same franchise.
+// Runtime fallback picker: one legend, one modern hit, never the same
+// franchise. Used only for days the verified calendar doesn't cover.
 function hardenedPuzzle(number) {
   const rand = mulberry32(number * 7919 + 13);
 
@@ -194,7 +204,6 @@ function hardenedPuzzle(number) {
       const movie = pool[Math.floor(rand() * pool.length)];
       if (!exclude || movie.franchise !== exclude) return movie;
     }
-    // Practically unreachable; fall back to first non-matching entry
     return pool.find((m) => m.franchise !== exclude) || pool[0];
   }
 
@@ -205,7 +214,25 @@ function hardenedPuzzle(number) {
 
 export function getDailyPuzzle() {
   const number = getPuzzleNumber();
-  const picked =
-    number < NEW_RULES_FROM ? legacyPuzzle(number) : hardenedPuzzle(number);
+
+  // Days 1-6 are frozen history
+  if (number < NEW_RULES_FROM) {
+    const picked = legacyPuzzle(number);
+    return { number, ...picked, siteUrl: SITE_URL };
+  }
+
+  // Verified calendar first (the trusted source)
+  const entry = CALENDAR.entries.find((e) => e.number === number);
+  if (entry) {
+    return {
+      number,
+      movieA: { id: entry.a.id, title: entry.a.title },
+      movieB: { id: entry.b.id, title: entry.b.title },
+      siteUrl: SITE_URL,
+    };
+  }
+
+  // Fallback: deterministic, unverified
+  const picked = hardenedPuzzle(number);
   return { number, ...picked, siteUrl: SITE_URL };
 }
